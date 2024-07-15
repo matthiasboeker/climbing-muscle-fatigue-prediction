@@ -331,3 +331,16 @@ def scale_transform_dataframe(df, scaler, y_col):
     df_scaled = pd.DataFrame(df_scaled, columns=df.columns, index=df.index)
 
     return df_scaled.drop([y_col], axis=1), df_scaled[y_col]
+
+def detrend_time_series(data):
+    time = np.arange(len(data))    
+    trend = np.polyfit(time, data, 1)
+    trend_line = np.polyval(trend, time)
+    
+    detrended_data = data - trend_line    
+    return detrended_data
+
+def estimate_trend(data):
+    time = np.arange(len(data))
+    coefficients = np.polyfit(time, data, 1)
+    return coefficients
